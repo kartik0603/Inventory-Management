@@ -299,6 +299,37 @@ The system follows a client-server architecture with a MongoDB database as the b
     ```
     
 
+ 
+
+# Inventory Management API Documentation
+
+
+
+## API Endpoints
+
+**Inventory Routes**
+Base URL: `/api/inventory`
+
+| Endpoint     | Method | Role           | Description                        |
+|--------------|--------|----------------|------------------------------------|
+| /create      | POST   | Admin          | Create a new stock entry           |
+| /update/:id  | PUT    | Admin          | Update an existing stock entry     |
+| /delete/:id  | DELETE | Admin          | Delete a product by ID             |
+| /product/:id | GET    | Admin          | Fetch product details by ID        |
+| /all         | GET    | Admin, Manager | Fetch all inventory products       |
+| /low-stock   | GET    | Admin, Manager | Fetch low-stock products           |
+| /import      | POST   | Admin          | Import products from CSV           |
+
+
+
+
+
+### Headers
+- `Content-Type: application/json`
+- `Authorization: Bearer Token`
+
+
+
 
 
 
