@@ -63,26 +63,48 @@ const deleteProduct = async (req, res) => {
 
 //Bulk import products 
 const importProductsFromCSV = async (req, res) => {
-  try {
-    const fileRows = [];
-    fs.createReadStream(req.file.path)
-      .pipe(csv.parse({ headers: true }))
-      .on('data', async (row) => {
+    try {
+      const fileRows = [];
+      const filePath = req.file.path;
+  
+      // Parse CSV and validate data
+      const stream = fs.createReadStream(filePath).pipe(csv.parse({ headers: true }));
+  
+      for await (const row of stream) {
+        // Validate supplier existence
         const supplierExists = await Supplier.exists({ _id: row.supplier });
         if (!supplierExists) {
           throw new Error(`Invalid supplier ID in row: ${JSON.stringify(row)}`);
         }
-        fileRows.push(row);
-      })
-      .on('end', async () => {
-        await Inventory.insertMany(fileRows);
-        fs.unlinkSync(req.file.path); // Delete the uploaded file
-        res.status(201).json({ message: 'Products imported successfully', data: fileRows });
+  
+        // Push validated rows to fileRows
+        fileRows.push({
+          name: row.name.trim(),
+          description: row.description ? row.description.trim() : '',
+          quantity: parseInt(row.quantity, 10),
+          lowStock: row.lowStock ? parseInt(row.lowStock, 10) : 10,
+          supplier: row.supplier,
+        });
+      }
+  
+      // Insert validated rows into database
+      const savedProducts = await Inventory.insertMany(fileRows);
+  
+      // Cleanup: Remove uploaded CSV file
+      fs.unlinkSync(filePath);
+  
+      res.status(201).json({
+        message: 'Products imported successfully',
+        data: savedProducts,
       });
-  } catch (error) {
-    res.status(500).json({ message: `Error importing CSV: ${error.message}` });
-  }
-};
+    } catch (error) {
+    
+      if (req.file && req.file.path) {
+        fs.unlinkSync(req.file.path);
+      }
+      res.status(500).json({ message: `Error importing CSV: ${error.message}` });
+    }
+  };
 
 //product by ID
 const getProductById = async (req, res) => {

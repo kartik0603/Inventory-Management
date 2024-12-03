@@ -76,7 +76,14 @@ const createSupplier = async (req, res) => {
   // Search suppliers by name or contact 
   const searchSuppliers = async (req, res) => {
     try {
-      const { query } = req.query; 
+      const { query } = req.query;
+  
+      // Validate query parameter
+      if (!query || typeof query !== 'string' || query.trim() === '') {
+        return res.status(400).json({ message: 'Please provide a valid search query.' });
+      }
+  
+      // Perform search using regex across multiple fields
       const suppliers = await Supplier.find({
         $or: [
           { name: { $regex: query, $options: 'i' } },
@@ -85,11 +92,18 @@ const createSupplier = async (req, res) => {
         ],
       });
   
+      // Handle no results found
+      if (suppliers.length === 0) {
+        return res.status(404).json({ message: 'No suppliers match your search criteria.' });
+      }
+  
+      // Return results
       res.status(200).json({ data: suppliers });
     } catch (error) {
       res.status(500).json({ message: `Error searching suppliers: ${error.message}` });
     }
   };
+  ;
   
   module.exports = {
     createSupplier,

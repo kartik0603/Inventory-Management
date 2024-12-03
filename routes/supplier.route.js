@@ -17,7 +17,7 @@ supplierRouter.use(protect);
 
 supplierRouter.post("/create", roleCkeck(["Admin"]), createSupplier);
 supplierRouter.get("/all", roleCkeck(["Admin", "Manager"]), getAllSuppliers);
-supplierRouter.get("/product/:id", roleCkeck(["Admin", "Manager"]), getSupplierById);
+supplierRouter.get("/by-id/:id", roleCkeck(["Admin", "Manager"]), getSupplierById);
 supplierRouter.put("/update/:id", roleCkeck(["Admin"]), updateSupplier);
 supplierRouter.delete("/delete/:id", roleCkeck(["Admin"]), deleteSupplier);
 supplierRouter.get("/search", roleCkeck(["Admin", "Manager"]), searchSuppliers);

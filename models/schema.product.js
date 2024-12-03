@@ -36,7 +36,7 @@ const inventorySchema = new mongoose.Schema({
 
 
 inventorySchema.pre('save', function (next) {
-  this.isLowStock = this.quantity < this.lowStockThreshold;
+  this.isLowStock = this.quantity < this.lowStock;
   next();
 });
 

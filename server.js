@@ -29,6 +29,8 @@ app.use(morgan("dev"));
 
 
 app.use("/api/users", userRouter);
+app.use("/api/suppliers", supplierRouter);
+app.use("/api/inventory", inverntoryRouter);
 
 
 
