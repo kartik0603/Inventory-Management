@@ -336,12 +336,10 @@ Base URL: `/api/inventory`
   - **URL**: ` localhost:5000/api/inventory/create`
   -**Headers:**
 
-* Content-Type: application/json
-* Authorization: Bearer Token (Replace with your actual token)
+ -Content-Type: application/json
+ -Authorization: Bearer Token (Replace with your actual token)
 
-**Body:**
-
-The request body should contain a JSON object with the following properties:
+**Body:** : 
 
 ```json
 {
@@ -351,9 +349,11 @@ The request body should contain a JSON object with the following properties:
   "supplier": "674eaa1a0d442eb8310b6f11",
   "price": 2290.5
 }
+```
 
 ## Response:
 
+```json
 
 {
   "message": "Stock entry created successfully",
@@ -378,15 +378,17 @@ The request body should contain a JSON object with the following properties:
    - **Headers**:
      `Content-Type`: `application/json`
      `Authorization`: `Bearer <token>`
-   **Body** :
-     ```json
-     {
+   - **Body** :
+   - ```json
+      {
        "quantity": 250,
        "price": 3220.0
      }
      ```
-     ***Respose**:
-     ```json
+
+     ## Respose:
+     
+```json
      {
    
     "message": "Stock entry updated successfully",
@@ -405,7 +407,7 @@ The request body should contain a JSON object with the following properties:
 }
 
 
-     
+```     
      
 
 
@@ -471,23 +473,159 @@ The request body should contain a JSON object with the following properties:
 
 
 ### 5. Get All Products
-   GET localhost:5000/api/inventory/all
-   Headers:
-     Content-Type: application/json
-     Authorization: Bearer <token>
+  -**Method**: `GET`
+  **URL**: `localhost:5000/api/inventory/all`
+   - **Headers**:
+     `Content-Type`: `application/json`
+     `Authorization`:` Bearer <token>`
+
+     ## Response
+```json
+     
+     {
+    "data": [
+       
+        {
+            "_id": "674eb5dcd77240ea65e966ea",
+            "name": "Standing Desk",
+            "description": "Height-adjustable standing desk",
+            "quantity": 10,
+            "lowStock": 5,
+            "supplier": {
+                "contactInfo": {
+                    "phone": "7778889990",
+                    "email": "ecoelec@example.com"
+                },
+                "_id": "674eaa460d442eb8310b6f21",
+                "name": "Eco Electronics"
+            },
+            "isLowStock": false,
+            "__v": 0,
+            "createdAt": "2024-12-03T07:40:12.817Z",
+            "updatedAt": "2024-12-03T07:40:12.817Z"
+        },
+        {
+            "_id": "674eb5dcd77240ea65e966eb",
+            "name": "Smartphone",
+            "description": "High-performance smartphone with excellent camera",
+            "quantity": 100,
+            "lowStock": 20,
+            "supplier": {
+                "contactInfo": {
+                    "phone": "1234567890",
+                    "email": "supplier@example.com"
+                },
+                "_id": "674ea9ef0d442eb8310b6f0d",
+                "name": "Supplier Name"
+            },
+            "isLowStock": false,
+            "__v": 0,
+            "createdAt": "2024-12-03T07:40:12.817Z",
+            "updatedAt": "2024-12-03T07:40:12.817Z"
+        },
+        
+    ]
+}
+
+```
+
+     
 
 ### 6. Get Low Stock Products
-   GET localhost:5000/api/inventory/low-stock
-   Headers:
-     Content-Type: application/json
-     Authorization: Bearer <token>
+   - **Method** : `GET`
+   - **URL** :  `localhost:5000/api/inventory/low-stock`
+   - **Headers**:
+     `Content-Type`: `application/json`
+     `Authorization`: `Bearer <token>`
+
+     ## Response
+```json
+     {
+    "data": [
+        {
+            "_id": "674eb312e803fe0f93d307bc",
+            "name": "LG 24 inch Monitors",
+            "quantity": 5,
+            "supplier": {
+                "_id": "674eaa1a0d442eb8310b6f11",
+                "name": "Tech Supplies Co."
+            }
+        }
+    ]
+}
+
+  ```   
 
 ### 7. Import Bulk Products
-   POST localhost:5000/api/inventory/import
-   Headers:
-     Authorization: Bearer <token>
-   Body (form-data):
-     - Key: file, Value: <file>
+
+ - **Method**: `POST`
+ - **URL** : `localhost:5000/api/inventory/import`
+ - **Headers**:
+     `Authorization`: `Bearer <token>`
+    **Body** `(form-data)`:
+     - **Key**: `file`,
+     - **Value**: `<file>`
+  
+     - ## Response
+
+```json
+{
+    "message": "Products imported successfully",
+    "data": [
+        {
+            "name": "Wireless Mouse",
+            "description": "High-precision wireless mouse for daily use",
+            "quantity": 50,
+            "lowStock": 10,
+            "supplier": "674ea9ef0d442eb8310b6f0d",
+            "isLowStock": false,
+            "_id": "674eb5dcd77240ea65e966e6",
+            "__v": 0,
+            "createdAt": "2024-12-03T07:40:12.817Z",
+            "updatedAt": "2024-12-03T07:40:12.817Z"
+        },
+        {
+            "name": "Mechanical Keyboard",
+            "description": "RGB-backlit keyboard ideal for gaming",
+            "quantity": 30,
+            "lowStock": 5,
+            "supplier": "674eaa1a0d442eb8310b6f11",
+            "isLowStock": false,
+            "_id": "674eb5dcd77240ea65e966e7",
+            "__v": 0,
+            "createdAt": "2024-12-03T07:40:12.817Z",
+            "updatedAt": "2024-12-03T07:40:12.817Z"
+        },
+        {
+            "name": "27-Inch Monitor",
+            "description": "4K UHD monitor with vibrant colors",
+            "quantity": 15,
+            "lowStock": 5,
+            "supplier": "674eaa300d442eb8310b6f19",
+            "isLowStock": false,
+            "_id": "674eb5dcd77240ea65e966e8",
+            "__v": 0,
+            "createdAt": "2024-12-03T07:40:12.817Z",
+            "updatedAt": "2024-12-03T07:40:12.817Z"
+        },
+        {
+            "name": "Ergonomic Office Chair",
+            "description": "Adjustable office chair with lumbar support",
+            "quantity": 20,
+            "lowStock": 8,
+            "supplier": "674eaa3a0d442eb8310b6f1d",
+            "isLowStock": false,
+            "_id": "674eb5dcd77240ea65e966e9",
+            "__v": 0,
+            "createdAt": "2024-12-03T07:40:12.817Z",
+            "updatedAt": "2024-12-03T07:40:12.817Z"
+        }
+    ]
+}
+
+
+```
+       
 
 
 
