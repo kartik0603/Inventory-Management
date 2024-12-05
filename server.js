@@ -35,7 +35,7 @@ app.use("/api/inventory", inverntoryRouter);
 
 
 app.get("/", (req, res) => {
-  res.send("Freelancer Project And PAyment Management API");
+  res.send("Inventory Management System API");
 });
 
 
