@@ -330,6 +330,305 @@ Base URL: `/api/inventory`
 
 
 
+###  1 Create Inventory
+
+  - **Method**: ` POST`
+  - **URL**: ` localhost:5000/api/inventory/create`
+  -**Headers:**
+
+ -Content-Type: application/json
+ -Authorization: Bearer Token (Replace with your actual token)
+
+**Body:** : 
+
+```json
+{
+  "name": "cctv camera",
+  "description": "bullet camera",
+  "quantity": 600,
+  "supplier": "674eaa1a0d442eb8310b6f11",
+  "price": 2290.5
+}
+```
+
+## Response:
+
+```json
+
+{
+  "message": "Stock entry created successfully",
+  "data": {
+    "name": "cctv camera",
+    "description": "bullet camera",
+    "quantity": 600,
+    "lowStock": 10,
+    "supplier": "674eaa1a0d442eb8310b6f11",
+    "isLowStock": false,
+    "_id": "674ec1b411474e2d1592fc94",
+    "createdAt": "2024-12-03T08:30:44.192Z",
+    "updatedAt": "2024-12-03T08:30:44.192Z",
+    "__v": 0
+  }
+}
+```
+
+### 2. Update Inventory
+   - **Method** :`PUT`
+   - **URL**: `localhost:5000/api/inventory/update/:id `
+   - **Headers**:
+     `Content-Type`: `application/json`
+     `Authorization`: `Bearer <token>`
+   - **Body** :
+   - ```json
+      {
+       "quantity": 250,
+       "price": 3220.0
+     }
+     ```
+
+     ## Respose:
+     
+```json
+     {
+   
+    "message": "Stock entry updated successfully",
+    "data": {
+        "_id": "674eadf918c40f427701467a",
+        "name": "cctv camera",
+        "description": "outdoor wifi camera",
+        "quantity": 250,
+        "lowStock": 10,
+        "supplier": "674eaa1a0d442eb8310b6f11",
+        "isLowStock": false,
+        "createdAt": "2024-12-03T07:06:33.774Z",
+        "updatedAt": "2024-12-03T07:18:58.235Z",
+        "__v": 0
+    }
+}
+
+
+```     
+     
+
+
+ ### 3. Get Product by ID
+   - **Meethod**: `GET`
+   - **URL**: `localhost:5000/api/inventory/product/674eadf918c40f427701467a`
+   -**Headers**:
+     - `Content-Type`: `application/json`
+     -`Authorization`: `Bearer <token>`
+
+## Response
+```json
+{
+    "data": {
+        "_id": "674eadf918c40f427701467a",
+        "name": "cctv camera",
+        "description": "outdoor wifi camera",
+        "quantity": 250,
+        "lowStock": 10,
+        "supplier": {
+            "contactInfo": {
+                "phone": "9876543210",
+                "email": "techsupplies@example.com"
+            },
+            "_id": "674eaa1a0d442eb8310b6f11",
+            "name": "Tech Supplies Co."
+        },
+        "isLowStock": false,
+        "createdAt": "2024-12-03T07:06:33.774Z",
+        "updatedAt": "2024-12-03T07:18:58.235Z",
+        "__v": 0
+    }
+}
+```
+
+
+     
+
+### 4. Delete Product by ID
+  - **Method** : `DELETE`
+  - **URL** :` localhost:5000/api/inventory/delete/674eae3918c40f4277014684`
+  - **Headers**:
+    -` Content-Type`: `application/json`
+    - `Authorization`: `Bearer <token>`
+## Response
+```json
+{
+    "message": "Stock entry deleted successfully",
+    "data": {
+        "_id": "674eae3918c40f4277014684",
+        "name": "cctv camera regular",
+        "description": "doom camera",
+        "quantity": 500,
+        "lowStock": 10,
+        "supplier": "674eaa1a0d442eb8310b6f11",
+        "isLowStock": false,
+        "createdAt": "2024-12-03T07:07:37.889Z",
+        "updatedAt": "2024-12-03T07:07:37.889Z",
+        "__v": 0
+    }
+}
+```
+
+
+### 5. Get All Products
+  -**Method**: `GET`
+  **URL**: `localhost:5000/api/inventory/all`
+   - **Headers**:
+     `Content-Type`: `application/json`
+     `Authorization`:` Bearer <token>`
+
+     ## Response
+```json
+     
+     {
+    "data": [
+       
+        {
+            "_id": "674eb5dcd77240ea65e966ea",
+            "name": "Standing Desk",
+            "description": "Height-adjustable standing desk",
+            "quantity": 10,
+            "lowStock": 5,
+            "supplier": {
+                "contactInfo": {
+                    "phone": "7778889990",
+                    "email": "ecoelec@example.com"
+                },
+                "_id": "674eaa460d442eb8310b6f21",
+                "name": "Eco Electronics"
+            },
+            "isLowStock": false,
+            "__v": 0,
+            "createdAt": "2024-12-03T07:40:12.817Z",
+            "updatedAt": "2024-12-03T07:40:12.817Z"
+        },
+        {
+            "_id": "674eb5dcd77240ea65e966eb",
+            "name": "Smartphone",
+            "description": "High-performance smartphone with excellent camera",
+            "quantity": 100,
+            "lowStock": 20,
+            "supplier": {
+                "contactInfo": {
+                    "phone": "1234567890",
+                    "email": "supplier@example.com"
+                },
+                "_id": "674ea9ef0d442eb8310b6f0d",
+                "name": "Supplier Name"
+            },
+            "isLowStock": false,
+            "__v": 0,
+            "createdAt": "2024-12-03T07:40:12.817Z",
+            "updatedAt": "2024-12-03T07:40:12.817Z"
+        },
+        
+    ]
+}
+
+```
+
+     
+
+### 6. Get Low Stock Products
+   - **Method** : `GET`
+   - **URL** :  `localhost:5000/api/inventory/low-stock`
+   - **Headers**:
+     `Content-Type`: `application/json`
+     `Authorization`: `Bearer <token>`
+
+     ## Response
+```json
+     {
+    "data": [
+        {
+            "_id": "674eb312e803fe0f93d307bc",
+            "name": "LG 24 inch Monitors",
+            "quantity": 5,
+            "supplier": {
+                "_id": "674eaa1a0d442eb8310b6f11",
+                "name": "Tech Supplies Co."
+            }
+        }
+    ]
+}
+
+  ```   
+
+### 7. Import Bulk Products
+
+ - **Method**: `POST`
+ - **URL** : `localhost:5000/api/inventory/import`
+ - **Headers**:
+     `Authorization`: `Bearer <token>`
+    **Body** `(form-data)`:
+     - **Key**: `file`,
+     - **Value**: `<file>`
+  
+     - ## Response
+
+```json
+{
+    "message": "Products imported successfully",
+    "data": [
+        {
+            "name": "Wireless Mouse",
+            "description": "High-precision wireless mouse for daily use",
+            "quantity": 50,
+            "lowStock": 10,
+            "supplier": "674ea9ef0d442eb8310b6f0d",
+            "isLowStock": false,
+            "_id": "674eb5dcd77240ea65e966e6",
+            "__v": 0,
+            "createdAt": "2024-12-03T07:40:12.817Z",
+            "updatedAt": "2024-12-03T07:40:12.817Z"
+        },
+        {
+            "name": "Mechanical Keyboard",
+            "description": "RGB-backlit keyboard ideal for gaming",
+            "quantity": 30,
+            "lowStock": 5,
+            "supplier": "674eaa1a0d442eb8310b6f11",
+            "isLowStock": false,
+            "_id": "674eb5dcd77240ea65e966e7",
+            "__v": 0,
+            "createdAt": "2024-12-03T07:40:12.817Z",
+            "updatedAt": "2024-12-03T07:40:12.817Z"
+        },
+        {
+            "name": "27-Inch Monitor",
+            "description": "4K UHD monitor with vibrant colors",
+            "quantity": 15,
+            "lowStock": 5,
+            "supplier": "674eaa300d442eb8310b6f19",
+            "isLowStock": false,
+            "_id": "674eb5dcd77240ea65e966e8",
+            "__v": 0,
+            "createdAt": "2024-12-03T07:40:12.817Z",
+            "updatedAt": "2024-12-03T07:40:12.817Z"
+        },
+        {
+            "name": "Ergonomic Office Chair",
+            "description": "Adjustable office chair with lumbar support",
+            "quantity": 20,
+            "lowStock": 8,
+            "supplier": "674eaa3a0d442eb8310b6f1d",
+            "isLowStock": false,
+            "_id": "674eb5dcd77240ea65e966e9",
+            "__v": 0,
+            "createdAt": "2024-12-03T07:40:12.817Z",
+            "updatedAt": "2024-12-03T07:40:12.817Z"
+        }
+    ]
+}
+
+
+```
+       
+
+
+
 
 
 
