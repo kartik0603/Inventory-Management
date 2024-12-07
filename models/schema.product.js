@@ -45,7 +45,7 @@ inventorySchema.statics.getLowStockItems = async function () {
   return this.find({ isLowStock: true });
 };
 
-// Compound index for optimized supplier-based queries
+// Compound index for supplier queries
 inventorySchema.index({ supplier: 1, isLowStock: 1 });
 
 const Inventory = mongoose.model('Inventory', inventorySchema);

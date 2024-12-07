@@ -3,12 +3,12 @@ const Supplier = require("../models/schema.supplier.js");
 const fs = require("fs");
 const csv = require("fast-csv");
 
-// / Create a new stock entry
+// / Create new Stock
 const createStockEntry = async (req, res) => {
   try {
     const { name, description, quantity, lowStock, supplier } = req.body;
 
-    // Validate supplier ID
+
     const existingSupplier = await Supplier.findById(supplier);
     if (!existingSupplier) {
       return res.status(400).json({ message: 'Invalid supplier ID provided.' });
@@ -21,13 +21,13 @@ const createStockEntry = async (req, res) => {
   }
 };
 
-//  Update stock entry by ID
+//  Update stock ID
 const updateStockEntry = async (req, res) => {
   try {
     const { id } = req.params;
     const { supplier, ...updates } = req.body;
 
-    // Validate supplier if updating
+    
     if (supplier) {
       const existingSupplier = await Supplier.findById(supplier);
       if (!existingSupplier) {
@@ -47,7 +47,7 @@ const updateStockEntry = async (req, res) => {
   }
 };
 
-//  Delete a product by Id
+//  Delete Product by Id
 const deleteProduct = async (req, res) => {
   try {
     const { id } = req.params;
@@ -61,23 +61,22 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-//Bulk import products 
+//Bulk import Products 
 const importProductsFromCSV = async (req, res) => {
     try {
       const fileRows = [];
       const filePath = req.file.path;
   
-      // Parse CSV and validate data
+     
       const stream = fs.createReadStream(filePath).pipe(csv.parse({ headers: true }));
   
       for await (const row of stream) {
-        // Validate supplier existence
+    
         const supplierExists = await Supplier.exists({ _id: row.supplier });
         if (!supplierExists) {
           throw new Error(`Invalid supplier ID in row: ${JSON.stringify(row)}`);
         }
   
-        // Push validated rows to fileRows
         fileRows.push({
           name: row.name.trim(),
           description: row.description ? row.description.trim() : '',
@@ -87,10 +86,10 @@ const importProductsFromCSV = async (req, res) => {
         });
       }
   
-      // Insert validated rows into database
+      // Insert database
       const savedProducts = await Inventory.insertMany(fileRows);
   
-      // Cleanup: Remove uploaded CSV file
+      //  Remove uploaded CSV File
       fs.unlinkSync(filePath);
   
       res.status(201).json({
@@ -130,7 +129,7 @@ const getAllProducts = async (req, res) => {
   }
 };
 
-//  low-stock products
+//  Low Stock product
 const getLowStockProducts = async (req, res) => {
   try {
     const lowStockProducts = await Inventory.find({ isLowStock: true })

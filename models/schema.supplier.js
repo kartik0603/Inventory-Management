@@ -16,7 +16,7 @@ const supplierSchema = new mongoose.Schema(
       email: {
         type: String,
         required: [true, 'Email is required'],
-        match: [/^\S+@\S+\.\S+$/, 'Please provide a valid email address'], 
+        match: [/^\S+@\S+\.\S+$/, 'Please provide a Valid email '], 
       },
     },
     address: {
@@ -29,7 +29,8 @@ const supplierSchema = new mongoose.Schema(
   }
 );
 
-//prevent deleting suppliers linked to inventory items
+// prevent supplier delete Which They have Inventory
+
 supplierSchema.pre('findOneAndDelete', async function (next) {
   const supplierId = this.getQuery()._id;
   const Inventory = mongoose.model('Inventory');
