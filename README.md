@@ -37,25 +37,7 @@ This is a robust and efficient Inventory Management System built using Node.js, 
 - **Nodemailer:** To send email notifications (e.g., for product import success).
 - **Morgan:** For logging HTTP requests to help with debugging.
 
-## Installation
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/your-username/inventory-management-system.git
-    ```
 
-2. Install dependencies:
-    ```bash
-    cd inventory-management-system
-    npm install
-    ```
-
-3. Create a `.env` file in the root of the project and add necessary configurations (like `MONGO_URI`, `JWT_SECRET`, etc.).
-
-4. Run the application:
-    ```bash
-    npm start
-    ```
-    The server will run at `http://localhost:5000`.
 
 ## Usage
 - `POST /api/inventory/import`: Upload a CSV file to import multiple products at once.
